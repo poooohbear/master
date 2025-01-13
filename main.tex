@@ -56,6 +56,7 @@ Gates}} \\[0.5cm]  % 英語タイトル
 % \date{2025/1/6}
 
 \begin{document}
+\sloppy
 
 \maketitle
 
@@ -102,8 +103,8 @@ The love she gave me continues to be a source of strength for me.
 \cleardoublepage
 \begin{abstract}
     Variational Quantum Algorithms (VQAs) are highlighted as key algorithms for demonstrating a quantum advantage on Noisy Intermediate-Scale Quantum (NISQ) devices, which are limited to executing shallow quantum circuits because of noise.
-However, the barren plateau problem, where the amplitude of the loss function gradient becomes exponentially small with system size, hinders this goal.
-Recent studies suggest that embedding tensor networks into quantum circuits and initializing the parameters can avoid the barren plateau.
+However, the barren plateau problem, where the amplitude of the loss function gradient becomes exponentially small with the number of qubits, hinders this goal.
+Recent studies suggest that embedding tensor networks into quantum circuits and initializing the parameters by them can avoid the barren plateau.
 Yet, embedding tensor networks into quantum circuits is generally difficult, and methods have been limited to the simplest structure, Matrix Product States~(MPSs).
 This study proposes a method to embed Tree Tensor Networks~(TTNs), characterized by their hierarchical structure, into shallow quantum circuits.
 TTNs are suitable for representing two-dimensional systems and systems with long-range correlations, which MPSs are inadequate for representing.
@@ -139,7 +140,7 @@ VQAs require only shallow circuits, making them notable as algorithms that can b
 VQAs come in many forms, such as Quantum Machine Learning~(QML)~\cite{qml0,qml1,qml2}, Variational Quantum Eigensolver~(VQE)~\cite{vqe0,vqe1,vqe2}, and Quantum Approximate Optimization Algorithm~(QAOA)~\cite{qaoa0,qaoa1,qaoa2}, with potential applications across diverse industries and fields.
 
 However, a significant challenge known as the barren plateau stands in the way of realizing quantum advantage~\cite{barrenplateau1,barrenplateau2}.
-The barren plateau phenomenon refers to the difficulty in VQAs where the amplitude of the cost function gradient decreases exponentially as the system size increases.
+The barren plateau phenomenon refers to the difficulty in VQAs where the amplitude of the cost function gradient decreases exponentially as the number of qubits increases.
 This phenomenon occurs regardless of whether the optimization method is gradient-based~\cite{gradient-based} or gradient-free~\cite{gradient-free}, and it has been observed even in shallow quantum circuits~\cite{barrenplateau-shallow}.
 Furthermore, it has been confirmed that this phenomenon also occurs in practical tasks using real-world data~\cite{barren-generic0,barren-generic1,barren-generic2}.
 Avoiding the barren plateau is a critical challenge in demonstrating the superiority of quantum algorithms using NISQ devices.
@@ -160,7 +161,7 @@ Additionally, the distance between any pair of leaf nodes scales in logarithmic 
 As connected correlation functions decay exponentially with path length within a tensor network generally, TTNs are better suited to capture longer-range correlations and represent two-dimensional objects than MPSs.
 TTNs are utilized in various fields such as chemical problems~\cite{chemical1,chemical2}, condensed matter physics~\cite{condmat1,condmat2,condmat3}, and machine learning~\cite{ml1,ml2}.
 
-\cite{rudolph2023synergistic} has successfully avoided the barren plateau problem by utilizing tensor networks.
+Rudolph et al., has successfully avoided the barren plateau problem by utilizing tensor networks\cite{rudolph2023synergistic}.
 They proposed a method of first optimizing tensor networks, then mapping the optimized tensor networks to quantum circuits, and finally executing VQAs.
 While numerical results have shown that this method can indeed avoid the barren plateau, mapping tensor network states into shallow quantum circuits is a general challenge.
 The case where the tensor network structure is an MPS has already been well-studied~\cite{EncodingMPS,mpsdecomp,mpsoptim,mpspreparation}.
@@ -174,7 +175,7 @@ However, effective methods for mapping tensor networks other than MPSs to shallo
 
 In this thesis, we propose a method to embed TTNs into shallow quantum circuits composed of only two-qubit gates, as shown in Fig.~\ref{fig:task-setting}.
 The primary obstacle to embedding TTNs into shallow quantum circuits has been the complexity of contractions arising from the intricate structure of TTNs.
-In general, the contraction of tensor networks requires an exponentially large memory footprint relative to the number of qubits if performed naively.
+In general, the contraction of tensor networks requires an exponentially large memory footprint relative to the system size if performed naively.
 Furthermore, determining the optimal contraction order for tensor networks is an NP-complete problem~\cite{np-complete}.
 Through the innovative design of a contraction method that balances minimal approximation error and computational efficiency, we successfully extend the embedding method of MPSs~\cite{mpsdecomp} to TTNs.
 Additionally, by applying the proposed method to practical problems, we successfully prepare better initial quantum circuits for VQAs than those provided by MPSs with a practical computational complexity.
@@ -202,7 +203,7 @@ Despite decades of effort by physicists and computer scientists, we still cannot
 The second is that we know specific problems that are difficult to solve with classical computers but can be efficiently addressed by quantum computers.
 The most renowned example is Shor's algorithm~\cite{shor1994algorithms}, which can factorize huge composite numbers with remarkable speed.
 Factoring such large numbers is challenging for classical computers and is used in cryptography due to this difficulty.
-However, it has been theoretically demonstrated that quantum computers can solve this problem in polynomial time.
+However, it has been theoretically demonstrated that quantum computers can solve this problem in polynomial time relative to the number of bits of the integer being factored.
 Although current quantum computers have only achieved the factorization of small numbers, it is anticipated that as the number of usable qubits increases, they will be able to factorize the large numbers used in cryptography.
 This advancement is expected to have a significant societal impact.
 
@@ -276,13 +277,13 @@ VQAs are unique in using quantum computers to estimate the cost function $C(\the
 A key part of a VQA is encoding the problem into a cost function. 
 Like classical machine learning, the cost function maps the trainable parameters $\theta$ to real numbers. 
 More abstractly, it creates a hypersurface, usually called the cost landscape, where the optimizer's job is to navigate this landscape to find the global minimum.
-The cost function is generally expressed as
+The cost function of a VQA is generally expressed as
 \begin{equation}
     C(\theta ) = f(\{\rho_k\},\{O_k\},U(\theta)),
 \end{equation}
 where f is a function, $U(\theta)$ is a parameterized unitary, $\theta$ includes discrete and continuous parameters, $\{\rho_k\}$ are input states from a training set, and $\{O_k\}$ are a set of observables.
 
-The cost function for VQAs should meet several key criteria: it must be faithful, efficiently estimable, provide quantum advantages, be operationally meaningful, and trainable.
+The cost function for VQAs should meet several key criteria: it must be faithful, be efficiently estimable, provide quantum advantages, be operationally meaningful, and be trainable.
 Specifically, the minimum of $C(\theta )$ should correspond to the problem's solution, ensuring it is faithful.
 It should be measurable on a quantum computer with possible classical post-processing, making it efficiently estimable. 
 Additionally, it should not be efficiently computable with a classical computer to ensure quantum advantage. 
@@ -304,7 +305,7 @@ The second is the variable structure ansatz.
 The variable structure ansatz optimizes not only the parameters of the circuit but also the structure of the circuit itself during training.
 The third is the hybrid ansatzes. 
 The hybrid ansatzes delegate part of the ansatz to classical hardware, reducing the complexity of quantum computations. By incorporating classical hardware, the computational burden on quantum systems is alleviated. 
-Finally, the fourth is the TN-inspired ansatz.
+Finally, the fourth is the tensor network-inspired ansatz.
 The tensor network-inspired ansatz draws inspiration from tensor network theory, leveraging its extensive experience to enhance expressiveness and achieve efficient representations.
 
 % optimizerについて
@@ -332,7 +333,7 @@ This involves minimizing the expectation value of $H$ over a trial state $\ket{\
 The cost function is both meaningful and faithful, as $C(\theta)\ge E$, with equality if the trial state $\psi(\theta)$ is the ground state of $H$. 
 Typically, the Hamiltonian $H$ is represented as a linear combination of products of Pauli operators $\sigma_k$, denoted as $H=\sum_k c_k \sigma_k$.
 Consequently, the cost function $C(\theta)$ is derived from a linear combination of the expectation values of $\sigma_k$. 
-Given that practical physical systems are generally described by sparse Hamiltonians, the cost function can be efficiently estimated on quantum computers, with computational costs that usually scale polynomially with the system size.
+Given that practical physical systems are generally described by sparse Hamiltonians, the cost function can be efficiently estimated on quantum computers, with computational costs that usually scale polynomially with the number of qubits.
 
 % 結果
 
@@ -347,20 +348,20 @@ Many QML tasks are formulated as VQA, and various applications have been develop
 In this thesis, we focus on generative models, which have garnered significant attention in recent years.
 Generative modeling is an unsupervised statistical learning task to learn a probability distribution that can generate a given dataset.
 The methodologies of quantum generative modeling are as follows.
-Let $\{x^{(i)}\}_i^D$ be a dataset of size $D$ sampled from a probability distribution $q(x)$.
+Let $\{x^{(i)}\}_{i=1}^D$ be a dataset of size $D$ sampled from a probability distribution $q(x)$.
 The goal is to learn $q(x)$ as a parameterized probability distribution $p_\theta(x)=|\bra{x}U(\theta)\ket{\psi_0}|^2$, obtained by applying $U(\theta)$ to an input state and measuring in the computational basis.
 This corresponds to a quantum circuit Born machine~\cite{born-machine}.
 In principle, the objective is to minimize the discrepancy between the two distributions.
 However, since $q(x)$ is not directly accessible, the cost function is defined using the negative log-likelihood defined by
 \begin{equation}
-    C(\theta)=-\frac{1}{D}\sum_i \log{p_\theta (x^{(i)})}.
+    C(\theta)=-\frac{1}{D}\sum_{=1}^D \log{p_\theta (x^{(i)})}.
 \end{equation}
 
 % 結果
 The advancements in the study of quantum generative models are as follows.
-\cite{born-machine} introduced a variational framework for training quantum circuit Born machines, demonstrated with classical and synthetic datasets, such as the bars-and-stripes dataset and synthetic datasets related to preparing GHZ states and coherent thermal states.
-\cite{q-generative2} investigated the generative model's representational power.
-\cite{q-generative3} showed that quantum circuit Born machines can simulate the restricted Boltzmann machine (RBM) and perform a sampling task difficult for classical computers.
+Benedetti et al., introduced a variational framework for training quantum circuit Born machines, demonstrated with classical and synthetic datasets, such as the bars-and-stripes dataset and synthetic datasets related to preparing GHZ states and coherent thermal states\cite{born-machine}.
+Liu and Wang investigated the generative model's representational power~\cite{q-generative2}.
+Coyle et al., showed that quantum circuit Born machines can simulate the restricted Boltzmann machine (RBM) and perform a sampling task difficult for classical computers~\cite{q-generative3}.
 
 % まとめ
 
@@ -373,7 +374,7 @@ The advancements in the study of quantum generative models are as follows.
 % barren plateauの概要(vqa6310)
 Despite significant advancements in VQAs, numerous challenges remain that must be addressed to sustain the potential for quantum speedups.
 Particularly, the barren plateau phenomena in cost-function landscapes have emerged as a critical bottleneck for VQAs.
-When a cost function has a barren plateau, the amplitude of its partial derivatives diminishes exponentially with system size, making the landscape nearly flat.
+When a cost function has a barren plateau, the amplitude of its partial derivatives diminishes exponentially with the number of qubits, making the landscape nearly flat.
 This requires exponentially high precision to overcome sampling noise and find a cost-minimizing direction, regardless of whether a gradient-based~\cite{gradient-based} or gradient-free~\cite{gradient-free} optimization method is employed.
 Such precision scaling could nullify the quantum advantage of VQAs.
 Therefore, examining the barren plateau phenomenon in VQAs is vital to preserving their potential quantum advantage.
@@ -388,7 +389,7 @@ Furthermore, it has been verified that this phenomenon occurs in practical tasks
 % ノイズによるbarren plateauの発生(vqa6314)
 While previous studies have attributed the barren plateau phenomenon to the randomness of the ansatz, recent findings have identified a distinct phenomenon where noise can induce the barren plateau phenomenon, regardless of the ansatz used~\cite{barren-noise}.
 In this context, noise infiltrating the circuit gradually corrupts the state towards the fixed point of the noise model, typically the maximally mixed state.
-This noise-induced phenomenon emerges when the circuit depth is linear with or exceeds the system size, affecting many commonly used ansatz.
+This noise-induced phenomenon emerges when the circuit depth is linear with or exceeds the number of qubits, affecting many commonly used ansatz.
 % Avoiding the barren plateau phenomenon remains a critical challenge in demonstrating quantum advantage with NISQ devices.
 
 % コスト関数のbarren plateauへの影響(vqa6312)
@@ -416,7 +417,7 @@ Another approach in initialization strategies involves utilizing classical compu
 Several studies suggest that pre-training with classical neural networks, such as Recurrent Neural Networks~(RNNs)~\cite{init-strategy-rnn} and Convolutional Neural Networks~(CNNs)~\cite{init-strategy-cnn}, can help avoid the barren plateau problem.
 A method for parameter initialization that leverages tensor networks, which are highly compatible with quantum computers, has also been proposed~\cite{rudolph2023synergistic}.
 This research suggests that optimizing tensor networks using classical resources and embedding these optimized networks into quantum circuits as initial parameters can circumvent the barren plateau problem.
-Numerical experiments have confirmed this method indeed avoids the barren plateau problem, regardless of system size or circuit depth.
+Numerical experiments have confirmed this method indeed avoids the barren plateau problem, regardless of the number of qubits or circuit depth.
 Numerical experiments have confirmed that the gradient magnitudes in VQAs remained stable, concluding that the barren plateau problem was successfully avoided.
 
 \cleardoublepage
@@ -483,16 +484,16 @@ In tensor network notation, this summation is shown by the corresponding legs be
 \begin{figure}
     \centering
     \includegraphics[width=0.4\linewidth]{fig-trace.pdf}
-    \caption{Graphical examples of trace.
-    When designating the left as the first axis, the upper right as the second axis, and the lower right as the third axis, (a) represents the equation $\sum_j A_{ijj}$, while (b) represents the equation $\sum_k A_{iik}$.}
+    \caption{Graphical examples of partial trace.
+    When designating the left as the first axis, the upper right as the second axis, and the lower right as the third axis, (a) represents the equation $\sum_j A_{ijj}$, while (b) represents the equation $\sum_i A_{iik}$.}
     \label{fig:trace}
 \end{figure}
 
-Figure~\ref{fig:trace} gives graphical examples of trace operation in tensor network notation.
-The advantage of trace notation in tensor network notation is that the summed-over indices do not need to be named.
+Figure~\ref{fig:trace} gives graphical examples of partial trace operation in tensor network notation.
+The advantage of partial trace notation in tensor network notation is that the summed-over indices do not need to be named.
 This simplifies the notation for large networks.
 
-One example illustrating the convenience of trace notation is the cyclic property of the trace.
+One example illustrating the convenience of partial trace notation is the cyclic property of the trace.
 As shown in Fig.~\ref{fig:trace-cyclic}, we can prove $\mathrm{Tr}(AB)=\mathrm{Tr}(BA)$ by simply sliding the tensor to change its position in the network.
 Although this example is quite simple, the intuitive transformations of equations in tensor network notation become even more beneficial as the number of tensors increases.
 
@@ -590,7 +591,7 @@ Therefore, the value of a network with disjoint tensors is simply the product of
 \end{figure}
 
 % テンソル演算3: contraction(TR2-5)
-The most frequently utilized operation is contraction, a tensor product followed by a trace over the indices of two tensors.
+The most frequently utilized operation is contraction, a tensor product followed by a partial trace over the indices of two tensors.
 The contraction of $A$'s $x$-th index and $B$'s $y$-th index is defined as
 \begin{equation}
     C_{i_1,\dots,i_{x-1},i_{x+1},\dots,i_r,j_1,j_{y-1},j_{y+1},\dots,j_s}=\sum_\alpha A_{i_1,\dots,i_{x-1},\alpha,i_{x+1},i_r}B_{j_1,\dots,j_{y-1},\alpha,j_{y+1},\dots,j_s},
@@ -947,10 +948,10 @@ Converting a TTN with bond dimension $\chi$ to bond dimension two can be done ac
 This truncated TTN is then transformed into a single layer of two-qubit gates by converting the isometric tensors in the layer into unitary tensors using the Gram-Schmidt orthogonalization process.
  The inverse of this layer is applied to the original TTN, resulting in a partially disentangled state with potentially reduced entanglement and bond dimensions.
 This process can be iteratively repeated to generate multiple layers, which are indexed in reverse order to form a circuit that approximates the target TTN. 
-Notably, the final layer of the disentangling circuit is used as the initial layer of the quantum circuit for approximation.
+Notably, the final layer of the disentangling circuit $\mathrm{L}[U]^{(k)}$ is used as the initial layer of the quantum circuit for approximation.
 
 While this algorithm appears to function effectively at first glance, the computation of $\ket{\psi^{(k+1)}} \leftarrow{\mathrm{L}[U]^{(k)\dagger}}\ket{\psi^{(k)}}$ is exceedingly challenging from the perspective of tensor networks.
-The structure of $\ket{\psi^{(k+1)}}$ is TTN, whereas tensor network $\mathrm{L}[U]^{(k)\dagger}\ket{\psi^{(k)}}$ has a more complex structure, necessitating its transformation into the shape of TTN.
+The structure of $\ket{\psi^{(k+1)}}$ is assumed to be TTN, whereas tensor network $\mathrm{L}[U]^{(k)\dagger}\ket{\psi^{(k)}}$ has a more complex structure, necessitating its transformation into the shape of TTN.
 As previously mentioned, the naive transformation of a general tensor network requires exponentially large memory relative to the number of qubits.
 Additionally, although limiting the bond dimension during the transformation can facilitate the process, the sequence of transformations can lead to substantial approximation errors.
 
@@ -994,8 +995,8 @@ Algorithm~\ref{algorithm:transformation} details the transformation of tensor ne
     }
     \label{fig:decomposition-c}
 \end{figure}
-We denote $i$-th tensor of $\ket{\psi^{(k)}}$ as $A^{(i)}$, where the numbers are assiend to $\ket{\psi^{(k)}}$ in breadth-first search~(BFS) order from the root.
-We also assign numbers to $\mathrm{L}[U]^{(k)\dagger}$ based on its origin in the TTN, denoting the tensor with number $i$ as $\mathrm{L}[U]^{(k)\dagger}_i$.
+We denote $i$-th tensor of $\ket{\psi^{(k)}}$ as $A^{(i)}$, where the numbers are assigned to the tensors of $\ket{\psi^{(k)}}$ in breadth-first search~(BFS) order from the root.
+We also assign numbers to the tensors of $\mathrm{L}[U]^{(k)\dagger}$ based on its origin in the TTN, denoting the tensor with number $i$ as $\mathrm{L}[U]^{(k)\dagger}_i$.
 For each tensor $\mathrm{L}[U]^{(k)\dagger}_i$ in $\mathrm{L}[U]^{(k)\dagger}$, first use SVD to split it into upper tensor $U_p$ and lower tensor $L_o$ to reduce the computational complexity in the penetration algorithm.
 Then, apply the penetration algorithm iteratively until the upper tensor is connected with $A^{(i)}$.
 Repeat this for the lower tensor, too.
@@ -1037,11 +1038,14 @@ Algorithm~\ref{algorithm:optimization} details the optimization process for TTNs
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{fig-optimization.pdf}
-    \caption{Optimization procedure of tensors. The environment tensor $E$ is obtained by contracting all tensors except the one of interest. We compute its SVD $E=USV^\dagger$ and calculate $UV^\dagger$ to find the unitary operator closest to the environment tensor. The generated unitary operator is positioned at the location of the removed unitary operator.}
+    \caption{Optimization procedure of tensors. 
+    Consider the tensor network formed by taking the inner product between the generated quantum circuit and the original TTN.
+    The original TTN is depicted in light blue, while the generated quantum circuit is shown in light green.
+    The environment tensor $E$ is obtained by contracting all tensors except the one of interest. We compute its SVD $E=USV^\dagger$ and calculate $UV^\dagger$ to find the unitary operator closest to the environment tensor. The generated unitary operator is positioned at the location of the removed unitary operator.}
     \label{fig:optimization}
 \end{figure}
 The environment tensor $E$ is obtained by contracting all tensors except for the one of interest.
-In this algorithm, the tensor of interest is $\mathrm{L}[U]^{(k)}_i$, and $E$ becomes a four-dimensional tensor with two legs on the left and two on the right.
+In this algorithm, the tensor of interest is $\mathrm{L}[U]^{(k)}_i$, and $E$ becomes a rank-4 tensor with two legs on the left and two on the right.
 This tensor represents the optimal operator for maximizing the magnitude of the inner product between the original TTN and the generated quantum circuit.
 However, since $E$ is not inherently unitary, it cannot be directly used as a quantum gate.
 To address this, we compute SVD of $E$ and utilize the fact that the product $UV^\dagger$ is the unitary matrix that minimizes the Frobenius distance to $E$.
@@ -1088,7 +1092,7 @@ In the penetration algorithm, SVD of a matrix with row dimension $\chi^2$ and co
 Given that the depth of the TTN is $\mathcal{O}(\log{N})$, the penetration operation is performed $\mathcal{O}(\log{N})$ times per tensor.
 Since each layer contains $\mathcal{O}(N)$ tensors, the complexity of absorbing one layer is $\mathcal{O}(N\log{N}\chi^4)$, leading to a total complexity of $\mathcal{O}(N\log{N}\chi^4K)$ for $K$ layers.
 In summary, the computational complexity to generate one layer is $\mathcal{O}(\max (N\log{N}\chi^4 K, N\chi^3 4^K))$, and it is $\mathcal{O}(\max (N\log{N}\chi^4 K^2, N\chi^3 4^K))$ for $K$ layers.
-It scales with the number of qubits.
+It scales polynomially with the number of qubits.
 Additionally, the bond dimension is constrained to $\chi^4$, making it suitable for embedding TTNs with large bond dimensions.
 Furthermore, by allowing approximations in optimization, the complexity can be reduced to $\mathcal{O}(N\log{N}\chi^4 K^2T)$ for $K$ layers.
 % 基本的な流れはMPSの場合と同様であること
@@ -1110,7 +1114,7 @@ Furthermore, by allowing approximations in optimization, the complexity can be r
 
 \cleardoublepage
 \chapter{Numerical Results}
-We conducted experiments using two distinct state vectors from the fields of machine learning and physics.
+We conducted numerical experiments using two distinct state vectors from the fields of machine learning and physics.
 The first state vector represents a uniform superposition over the binary data samples in the $4 \times 4$ bars and stripes (BAS) dataset, which has become a canonical benchmark for generative modeling tasks in quantum machine learning.
 The second state vector represents the ground state of the $J_1$-$J_2$ Heisenberg model, a model that characterizes competing interactions in quantum spin systems.
 The Hamiltonian for this model is given by
@@ -1149,7 +1153,7 @@ In this study, infidelity quantifies the success of our transformations.
  \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{fig_ttn_mps.pdf}
-    \caption{Infidelities between original state vectors and generated quantum circuits. The bond dimensions of tensor networks are 8, and the number of optimization steps is 1,000. The learning rate for optimization is set to 0.65 for the BAS dataset and 0.6 for the $J_1$-$J_2$ Heisenberg model. The MPS results are represented by the blue lines, while the TTN results are depicted by the orange lines. Additionally, the infidelity between the tensor network and the state vector is indicated by the dotted lines.}
+    \caption{Infidelities between original state vectors and generated quantum circuits. The bond dimensions of tensor networks are 8, and the number of optimization steps $T$ is $1,000$. The learning rate $r$ for optimization is set to 0.65 for the BAS dataset and 0.6 for the $J_1$-$J_2$ Heisenberg model. The MPS results are represented by the blue lines, while the TTN results are depicted by the orange lines. Additionally, the infidelity between the original tensor network and the state vector is indicated by the dotted lines.}
     \label{fig:result1}
 \end{figure}
  
@@ -1203,6 +1207,7 @@ However, embedding tensor networks into shallow quantum circuits is generally di
 In this study, we proposed a method for embedding TTNs, which have a more complex structure than MPSs and can efficiently represent two-dimensional systems and systems with long-range correlations into shallow quantum circuits composed solely of two-qubit gates.
 We applied our proposed method to different types of TTNs and confirmed that it prepares quantum circuit parameters with better accuracy than embedding MPSs.
 Additionally, the computational complexity is $\mathcal{O}(\max (N\log{N}\chi^4 K^2, N\chi^3 4^K))$, or $\mathcal{O}(N\log{N}\chi^4 K^2T)$ with approximation, making it applicable to practical problems.
+As the number of qubits increases in the future, the difference in representational power between TTN and MPS will become more pronounced, thereby enhancing the importance of methods for embedding TTN into quantum circuits.
 This study will be an important bridge for implementing hybrid algorithms combining tree tensor networks and quantum computing.
 
 \bibliographystyle{apalike}
