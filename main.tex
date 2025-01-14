@@ -107,10 +107,10 @@ However, the barren plateau problem, where the amplitude of the loss function gr
 Recent studies suggest that embedding tensor networks into quantum circuits and initializing the parameters by them can avoid the barren plateau.
 Yet, embedding tensor networks into quantum circuits is generally difficult, and methods have been limited to the simplest structure, Matrix Product States~(MPSs).
 This study proposes a method to embed Tree Tensor Networks~(TTNs), characterized by their hierarchical structure, into shallow quantum circuits.
-TTNs are suitable for representing two-dimensional systems and systems with long-range correlations, which MPSs are inadequate for representing.
+TTNs are suitable for representing higher-dimensional systems and systems with long-range correlations, which MPSs are inadequate for representing.
 Our numerical results show that embedding TTNs provides better initial quantum circuits than MPS.
 Additionally, our method has a practical computational complexity, making it applicable to a wide range of TTNs.
-This study is expected to extend the application of VQAs to two-dimensional systems and those with long-range correlations, which have been challenging to utilize.
+This study is expected to extend the application of VQAs to higher-dimensional systems and those with long-range correlations, which have been challenging to utilize.
 \end{abstract}
 
 % \clearpage
@@ -158,7 +158,7 @@ These excellent algorithms have recently been applied to machine learning, conti
 On the other hand, TTNs have tree-like structures of tensors.
 The procedures used in DMRG and TEBD have been applied to TTNs~\cite{dmrg-ttn,tebd-ttn}.
 Additionally, the distance between any pair of leaf nodes scales in logarithmic order in TTNs, while it scales in linear order in MPSs.
-As connected correlation functions decay exponentially with path length within a tensor network generally, TTNs are better suited to capture longer-range correlations and represent two-dimensional objects than MPSs.
+As connected correlation functions decay exponentially with path length within a tensor network generally, TTNs are better suited to capture longer-range correlations and represent higher-dimensional objects than MPSs.
 TTNs are utilized in various fields such as chemical problems~\cite{chemical1,chemical2}, condensed matter physics~\cite{condmat1,condmat2,condmat3}, and machine learning~\cite{ml1,ml2}.
 
 Rudolph et al., has successfully avoided the barren plateau problem by utilizing tensor networks\cite{rudolph2023synergistic}.
@@ -179,7 +179,7 @@ In general, the contraction of tensor networks requires an exponentially large m
 Furthermore, determining the optimal contraction order for tensor networks is an NP-complete problem~\cite{np-complete}.
 Through the innovative design of a contraction method that balances minimal approximation error and computational efficiency, we successfully extend the embedding method of MPSs~\cite{mpsdecomp} to TTNs.
 Additionally, by applying the proposed method to practical problems, we successfully prepare better initial quantum circuits for VQAs than those provided by MPSs with a practical computational complexity.
-This study is expected to extend the application of VQAs to two-dimensional systems and those with long-range correlations, which have previously been challenging to utilize.
+This study is expected to extend the application of VQAs to higher-dimensional systems and those with long-range correlations, which have previously been challenging to utilize.
 
 \cleardoublepage
 \chapter{Variational quantum algorithms}
@@ -229,6 +229,7 @@ With current quantum technologies, building a quantum system that meets both req
 
 % 実用的な量子コンピュータ実現のためには誤り訂正を載せることが不可欠であること
 Eventually, we expect that quantum error correction will allow us to protect and scale up quantum computers.
+Quantum computation using quantum devices equipped with error correction capabilities is referred to as Fault-Tolerant Quantum Computing~(FTQC).
 The principle of quantum error correction involves encoding quantum information in a highly entangled state, which prevents the environment from accessing and damaging the encoded information, thereby protecting the quantum system.
 Quantum error correction techniques have been extensively studied, and many promising methods exist.
 However, quantum error correction entails significant overhead, meaning that to protect quantum information, we need to use many more physical qubits than the logical qubits we want to safeguard.
@@ -299,13 +300,13 @@ These are referred to as problem-inspired ansatzes.
 Conversely, some ansatz architectures are problem-agnostic, meaning they can be applied even without relevant information.
 
 Here, we review several significant ansatzes. 
-The first is the hardware-efficient ansatz. 
+The first is the hardware-efficient ansatz~\cite{ansatz-hardware}. 
 The hardware-efficient ansatz is designed to reduce the circuit depth needed for implementation on specific quantum hardware.
-The second is the variable structure ansatz. 
+The second is the variable structure ansatz~\cite{ansatz-variable}. 
 The variable structure ansatz optimizes not only the parameters of the circuit but also the structure of the circuit itself during training.
-The third is the hybrid ansatzes. 
+The third is the hybrid ansatzes~\cite{ansatz-hybrid}. 
 The hybrid ansatzes delegate part of the ansatz to classical hardware, reducing the complexity of quantum computations. By incorporating classical hardware, the computational burden on quantum systems is alleviated. 
-Finally, the fourth is the tensor network-inspired ansatz.
+Finally, the fourth is the tensor network-inspired ansatz~\cite{ansatz-tensor1,ansatz-tensor2}.
 The tensor network-inspired ansatz draws inspiration from tensor network theory, leveraging its extensive experience to enhance expressiveness and achieve efficient representations.
 
 % optimizerについて
@@ -692,9 +693,10 @@ Advanced algorithms such as Density Matrix Renormalization Group~(DMRG) and Time
 In contrast, Tree Tensor Networks~(TTNs), depicted in Fig.~\ref{fig:ttn}, have a more complex tree-like structure.
 It is evident that MPSs can be considered a subset of TTNs.
 One notable advantage of TTNs is that the distance between any pair of leaf nodes scales logarithmically with the number of nodes, in contrast to the linear scaling observed in MPSs. 
-Since connected correlation functions in tensor networks typically decay exponentially with path length, TTNs are inherently more effective at capturing long-range correlations and are particularly well-suited for representing two-dimensional systems. 
+Since connected correlation functions in tensor networks typically decay exponentially with path length, TTNs are inherently more effective at capturing long-range correlations and are particularly well-suited for representing higher-dimensional systems. 
 As a result, TTNs have found applications in diverse domains, including quantum chemistry~\cite{chemical1,chemical2}, condensed matter physics~\cite{condmat1,condmat2,condmat3}, and machine learning~\cite{ml1,ml2}.
 
+The coefficients representing the state vector as a linear combination of a given basis form a tensor, which can be expressed using a tensor network.
 Let $\ket{\psi}$ be a tensor network in the form of either an MPS or a TTN.
 Number the tensors in $\ket{\psi}$ from left to right for MPS, and in breadth-first search~(BFS) order from the root node for TTN, denoting the $i$-th tensor as $A^{(i)} (i=1,\dots,N)$.
 By adding a leg with bond dimension one, a two-legged tensor can be converted into a three-legged tensor, thus all tensors in $\ket{\psi}$ can be considered three-legged.
@@ -715,7 +717,7 @@ Unless otherwise specified, we assume that any MPSs and TTNs are converted to th
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=\linewidth]{fig-decomposition.pdf}
-%     \caption{A schematic diagram illustrating the analytical decomposition for a TTN. (a) The TTN is truncated to a bond dimension of two using SVD. This simplified TTN is then embedded into a quantum circuit by converting tensors into unitaries via Gram-Schmidt orthogonalization. These unitaries act as disentanglers and are applied to the original TTN. By repeating these steps, a multi-layer quantum circuit is formed. (b) A diagram of a penetration algorithm. It contracts two connected tensors, reorders axes, and separates them using SVD, making it seem like their positions have swapped. (c) A schematic diagram explaining the transformation from a complex tensor network into a TTN. We number the tensors based on their positions in the network. We first use SVD to split it into an upper and a lower tensor. Then, we apply the penetration algorithm iteratively until the upper tensor is connected with the corresponding tensor. This process is repeated for the lower tensor as well. Finally, we contract the upper and lower tensors with the corresponding tensor to form a new tensor in the TTN. This process is performed sequentially from the highest-numbered component of the disentangler.}
+%     \caption{A schematic diagram illustrating the systematic decomposition for a TTN. (a) The TTN is truncated to a bond dimension of two using SVD. This simplified TTN is then embedded into a quantum circuit by converting tensors into unitaries via Gram-Schmidt orthogonalization. These unitaries act as disentanglers and are applied to the original TTN. By repeating these steps, a multi-layer quantum circuit is formed. (b) A diagram of a penetration algorithm. It contracts two connected tensors, reorders axes, and separates them using SVD, making it seem like their positions have swapped. (c) A schematic diagram explaining the transformation from a complex tensor network into a TTN. We number the tensors based on their positions in the network. We first use SVD to split it into an upper and a lower tensor. Then, we apply the penetration algorithm iteratively until the upper tensor is connected with the corresponding tensor. This process is repeated for the lower tensor as well. Finally, we contract the upper and lower tensors with the corresponding tensor to form a new tensor in the TTN. This process is performed sequentially from the highest-numbered component of the disentangler.}
 %     \label{fig:decomposition}
 % \end{figure}
 
@@ -726,15 +728,15 @@ Unless otherwise specified, we assume that any MPSs and TTNs are converted to th
 % \begin{figure*}[!h]
 %   \centering
 %    {\epsfig{file = fig-decomposition.pdf, width = 15cm}}
-%   \caption{A schematic diagram illustrating the analytical decomposition for a TTN. (a) The TTN is truncated to a bond dimension of two using SVD. This simplified TTN is then embedded into a quantum circuit by converting tensors into unitaries via Gram-Schmidt orthogonalization. These unitaries act as disentanglers and are applied to the original TTN. By repeating these steps, a multi-layer quantum circuit is formed. (b) A diagram of a penetration algorithm. It contracts two connected tensors, reorders axes, and separates them using SVD, making it seem like their positions have swapped. (c) A schematic diagram explaining the transformation from a complex tensor network into a TTN. We number the tensors based on their positions in the network. We first use SVD to split it into an upper and a lower tensor. Then, we apply the penetration algorithm iteratively until the upper tensor is connected with the corresponding tensor. This process is repeated for the lower tensor as well. Finally, we contract the upper and lower tensors with the corresponding tensor to form a new tensor in the TTN. This process is performed sequentially from the highest-numbered component of the disentangler.}
+%   \caption{A schematic diagram illustrating the systematic decomposition for a TTN. (a) The TTN is truncated to a bond dimension of two using SVD. This simplified TTN is then embedded into a quantum circuit by converting tensors into unitaries via Gram-Schmidt orthogonalization. These unitaries act as disentanglers and are applied to the original TTN. By repeating these steps, a multi-layer quantum circuit is formed. (b) A diagram of a penetration algorithm. It contracts two connected tensors, reorders axes, and separates them using SVD, making it seem like their positions have swapped. (c) A schematic diagram explaining the transformation from a complex tensor network into a TTN. We number the tensors based on their positions in the network. We first use SVD to split it into an upper and a lower tensor. Then, we apply the penetration algorithm iteratively until the upper tensor is connected with the corresponding tensor. This process is repeated for the lower tensor as well. Finally, we contract the upper and lower tensors with the corresponding tensor to form a new tensor in the TTN. This process is performed sequentially from the highest-numbered component of the disentangler.}
 %   \label{fig:decomposition}
 %  \end{figure*}
  
 Although embedding general tensor networks into shallow quantum circuits is challenging, several workable methods have been proposed for MPSs.
 In this subsection, we overview the technique for seamlessly embedding MPSs into shallow quantum circuits.
 
-% analytical decomposition by disentangling
-\cite{EncodingMPS} introduced an analytical decomposition method for an MPS into several layers of two-qubit gates with a linear next-neighbor topology. 
+% systematic decomposition by disentangling
+\cite{EncodingMPS} introduced a systematic decomposition method for an MPS into several layers of two-qubit gates with a linear next-neighbor topology. 
 First, the MPS $\ket{\psi^{(k)}}$ with bond dimension $\chi$ is truncated to a bond dimension two MPS $\ket{\psi_{\chi=2}^{(k)}}$.
 Next, the isometric tensors in $\ket{\psi_{\chi=2}^{(k)}}$ are converted into unitary tensors.
 The resulting set of unitary tensors, $L[U]^{(k)}$, is referred to as a layer and can be embedded into a quantum circuit composed of two-qubit gates.
@@ -749,6 +751,7 @@ and
 are holds, $L[U]^{(k)\dagger}$ can be considered a disentangler, transforming the quantum state into a product state.
 Finally, a new MPS $\ket{\psi^{(k+1)}}=\mathrm{L}[U]^{(k)\dagger}\ket{\psi^{(k)}}$ can be obtained.
 Since $L[U]^{(k)\dagger}$ acts as a disentangler, $\ket{\psi^{(k+1)}}$ should have reduced entanglement compared to $\ket{\psi^{(k)}}$.
+However, this operation involves the transformation of the tensor network, which introduces approximation errors in practical calculations.
 By repeating this process starting from the original MPS $\ket{\psi^{(0)}}$, a quantum circuit $\prod_{k=1}^K \mathrm{L}[U]^{(k)}\ket{0}$ with multiple layers can be generated.
  
 % decomposition by optimization
@@ -764,7 +767,7 @@ For a more detailed explanation of the optimization algorithm, please refer to \
 
 % decomposition of MPS
 \cite{mpsdecomp} investigated the optimal sequence for combining these two methods to achieve the highest accuracy.
-The study concludes that the best results are obtained by adding new layers through an analytical decomposition step and optimizing all layers with each addition.
+The study concludes that the best results are obtained by adding new layers through a systematic decomposition step and optimizing all layers with each addition.
 This method has achieved exceptional accuracy in embedding a wide range of MPSs in fields such as physics, machine learning, and random systems.
 Therefore, it can be considered one of the best current techniques for embedding MPSs into shallow circuits.
 However, this method does not support embedding tensor networks other than MPSs.
@@ -824,7 +827,7 @@ Consequently, embedding tensor networks such as TTNs and other non-MPS structure
 % \section{methods}
 
 
-% \subsection{Analytic decomposition by disentangling}
+% \subsection{Systematic decomposition by disentangling}
 
 % MPSを1レイヤーに埋め込む概要(EM4)
 
@@ -906,32 +909,32 @@ In this section, we propose a method for embedding TTNs into shallow quantum cir
 The proposed method can be generalized to embed TTNs of any shape since any shape of TTN can be converted into a binary tree using SVD.
 Below, we assume a binary tree for simplicity.
 The fundamental approach of the proposed method is similar to that of MPSs~\cite{mpsdecomp}. 
-By repeatedly adding layers using the analytical decomposition algorithm and optimizing the entire circuit, we generate highly accurate embedded quantum circuits.
-This chapter first introduces the analytical decomposition algorithm for TTNs.
+By repeatedly adding layers using the systematic decomposition algorithm and optimizing the entire circuit, we generate highly accurate embedded quantum circuits.
+This chapter first introduces the systematic decomposition algorithm for TTNs.
 Due to the increased structural complexity of TTNs compared to MPSs, the contraction methods become non-trivial. 
 We propose a method that balances approximation error and computational cost.
-Next, we describe the optimization algorithm for TTNs and integrate it with the analytical decomposition.
+Next, we describe the optimization algorithm for TTNs and integrate it with the systematic decomposition.
 Finally, we discuss the computational cost and demonstrate that embedding TTNs is feasible within practical computational limits.
 
 \section{Overview of this method}
 
 
-\subsection{Analytic decomposition by disentangling}
-Our analytical decomposition algorithm for TTNs is an extension of the algorithm for MPSs introduced in \cite{EncodingMPS}.
+\subsection{Systematic decomposition by disentangling}
+Our systematic decomposition algorithm for TTNs is an extension of the algorithm for MPSs introduced in \cite{EncodingMPS}.
 We denote the original TTN as $\ket{\psi_0}$, the $k$-th layer of the quantum circuit as $\mathrm{L}[U]^{(k)}$, the number of layers in resulting quantum circuit as $K$, and the resulting quantum circuit as $\prod_{k=1}^K \mathrm{L}[U]^{(k)}\ket{0}$.
-Algorithm~\ref{algorithm:decomposition} details the analytical decomposition process for TTNs, as depicted in Fig.~\ref{fig:decomposition-a}.
+Algorithm~\ref{algorithm:decomposition} details the systematic decomposition process for TTNs, as depicted in Fig.~\ref{fig:decomposition-a}.
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{fig-decomposition-a.pdf}
-    \caption{A schematic diagram illustrating the analytical decomposition for a TTN.
+    \caption{A schematic diagram illustrating the systematic decomposition for a TTN.
     The TTN is truncated to a bond dimension of two using SVD. This simplified TTN is then embedded into a quantum circuit by converting tensors into unitaries via Gram-Schmidt orthogonalization. These unitaries act as disentanglers and are applied to the original TTN. By repeating these steps, a multi-layer quantum circuit is formed.
     }
     \label{fig:decomposition-a}
 \end{figure}
 
 \begin{algorithm}[tbp]
- \caption{Analytical decomposition of TTN.}
+ \caption{Systematic decomposition of TTN.}
  \label{algorithm:decomposition}
  \KwIn{TTN $\ket{\psi_0}$, Maximum number of layers $K$}
  \KwOut{Quantum Circuit $\prod_{k=1}^K \mathrm{L}[U]^{(k)}\ket{0}$}
@@ -1005,9 +1008,9 @@ Perform this process sequentially from the highest-numbered tensor in $\mathrm{L
 This algorithm allows contraction with each tensor in $\mathrm{L}[U]^{(k)\dagger}$ without changing the TTN structure of $\ket{\psi^{(k)}}$.
 Consequently, despite minor approximation errors during penetration, $\mathrm{L}[U]^{(k)\dagger}\ket{\psi^{(k)}}$ can be transformed into a TTN structure $\ket{\psi^{(k+1)}}$.
 
-\subsection{Combination of analytic decomposition and optimization}
-As demonstrated in ~\cite{mpsdecomp}, the analytical decomposition algorithm achieves the highest embedding accuracy when appropriately combined with the optimization algorithm.
-In this study, we also integrate analytical decomposition with the optimization algorithm.
+\subsection{Combination of systematic decomposition and optimization}
+As demonstrated in ~\cite{mpsdecomp}, the systematic decomposition algorithm achieves the highest embedding accuracy when appropriately combined with the optimization algorithm.
+In this study, we also integrate the systematic decomposition with the optimization algorithm.
 The fundamental concept of the optimization algorithm for quantum circuits embedded with TTNs is analogous to that for quantum circuits embedded with MPS. 
 \begin{algorithm}[tbp]
  \caption{Optimization.}
@@ -1053,10 +1056,10 @@ Consequently, $UV^\dagger$ can be considered the unitary operator that maximizes
 Given the strength of this local update, we introduce a learning rate $r$, which modifies the unitary update rule via $U_{old}(U_{old}^\dagger U_{new})^r$. 
 Replacing $\mathrm{L}[U]^{(k)}_i$ with the unitary operator calculated in this manner for all operators constitutes one step, and repeating this process for $T$ steps completes the optimization algorithm.
 
-The integration of the analytical decomposition and optimization algorithms involves a method where a new layer is added using the analytical decomposition algorithm, followed by optimizing the entire quantum circuit with the optimization algorithm.
+The integration of the systematic decomposition and optimization algorithms involves a method where a new layer is added using the systematic decomposition algorithm, followed by optimizing the entire quantum circuit with the optimization algorithm.
 This process is repeated iteratively.
 \cite{mpsdecomp} refers to this method as Iter[$D_i$, $O_{all}$], confirming that it achieves the highest accuracy regardless of the type of MPSs.
-When creating the $(k+1)$-th layer using the analytical decomposition algorithm, the layers up to $k$ are first absorbed into the original TTN using the penetration algorithm before executing the analytical decomposition algorithm.
+When creating the $(k+1)$-th layer using the systematic decomposition algorithm, the layers up to $k$ are first absorbed into the original TTN using the penetration algorithm before executing the systematic decomposition algorithm.
 It should be noted that since we are using the penetration algorithm, the $\ket{\psi}$ that has absorbed $L[U]^{j\dagger}$ retains its TTN structure.
 The integrated algorithm is presented as Algorithm~\ref{algorithm:integration}.
 \begin{algorithm}[tbp]
@@ -1085,6 +1088,7 @@ In Algorithm~\ref{algorithm:integration}, truncating $\ket{\psi}$ to $\ket{\psi_
 Optimizing the entire circuit is significantly more challenging compared to MPS due to the complexity of the TTN structure.
 Generally, exponential memory is required with respect to $N$, but by using an appropriate contraction order and caching, the computation can be performed in $\mathcal{O}(N\chi^3 4^K)$, which is linear in $N$.
 Although the computational complexity increases exponentially with the number of layers, this algorithm is designed for embedding into shallow quantum circuits, and it operates efficiently for $K \approx 7$, as used in our experiments.
+Details on the techniques explained here are provided in ~\cite{inomata2025}.
 Furthermore, when embedding TTNs into a larger number of layers, it is possible to achieve $\mathcal{O}(N\log{N}\chi^4KT)$, where $T$ is the number of sweeps, linear computational complexity with respect to the number of layers, bond dimension by introducing approximations that prevent the bond dimension from exceeding $\chi$ during the contraction of environment tensors, as used in the embedding of MPS~\cite{mpsdecomp}.
 
 The computational complexity of absorbing $K$ layers into the original TTN is $\mathcal{O}(N\log{N}\chi^4K)$.
@@ -1132,7 +1136,7 @@ MPSs and TTNs were constructed by iteratively applying SVD to the state vector f
 
 The conversion from MPSs and TTNs to quantum circuits employed the Iter[$D_i$, $O_{all}$] method, which is also utilized in the proposed method.
 Additionally, to compare with the proposed method, we also used $D_{all}$, $O_{all}$, and Iter[$I_i$, $O_{all}$] from \cite{mpsdecomp}.
-The $D_{all}$ method generates circuits solely through analytical decomposition.
+The $D_{all}$ method generates circuits solely through systematic decomposition.
 The $O_{all}$ method optimizes circuits starting from an initial state composed only of identity gates.
 The Iter[$I_i$, $O_{all}$] method sequentially adds identity layers, optimizing the entire circuit at each step.
 % We set the hyperparameters to 1,000 optimization sweeps and a learning rate of 0.6.
@@ -1185,11 +1189,11 @@ Consequently, in the shallow region, TTN prepares a better initial circuit due t
 Conversely, in the intermediate region, MPS prepares a better initial circuit as the approximation error outweighs the representational capacity. 
 As the number of qubits in quantum computers increases, the difference in representational capacity between TTN and MPS will become more pronounced, and the impact of approximation errors will relatively diminish.
 
-Figure~\ref{fig:result2} highlights the importance of the analytical decomposition algorithm for embedding TTNs into quantum circuits.
+Figure~\ref{fig:result2} highlights the importance of the systematic decomposition algorithm for embedding TTNs into quantum circuits.
 As demonstrated in previous research on MPS~\cite{mpsdecomp}, methods such as Iter[$D_i$, $O_{all}$] and Iter[$I_i$, $O_{all}$], which sequentially add layers and optimize all circuits, achieve high accuracy. 
 Furthermore, as suggested in previous studies, it was confirmed that Iter[$I_i$, $O_{all}$] struggles with the BAS dataset even in TTN embeddings, where the singular values at the bond become discontinuous. 
-This indicates that Iter[$D_i$, $O_{all}$] is the most effective and robust embedding method, achieving high accuracy in multiple fields, including machine learning and physics, thus affirming the critical importance of the analytical decomposition algorithm.
-This result also verifies the effective performance of the proposed analytical decomposition method.
+This indicates that Iter[$D_i$, $O_{all}$] is the most effective and robust embedding method, achieving high accuracy in multiple fields, including machine learning and physics, thus affirming the critical importance of the systematic decomposition algorithm.
+This result also verifies the effective performance of the proposed systematic decomposition method.
 % 実験で使用したMPS, TTNの作り方
 
 % Iter[D_i, O_all]が最も良いことを示してDecompを考える意義を示す図
@@ -1204,7 +1208,7 @@ This result also verifies the effective performance of the proposed analytical d
 \chapter{Conclusion}
 To avoid the barren plateau issue in VQAs, there is increasing interest in using tensor networks to initialize quantum circuits. 
 However, embedding tensor networks into shallow quantum circuits is generally difficult, and prior research has been limited to embedding MPSs.
-In this study, we proposed a method for embedding TTNs, which have a more complex structure than MPSs and can efficiently represent two-dimensional systems and systems with long-range correlations into shallow quantum circuits composed solely of two-qubit gates.
+In this study, we proposed a method for embedding TTNs, which have a more complex structure than MPSs and can efficiently represent higher-dimensional systems and systems with long-range correlations into shallow quantum circuits composed solely of two-qubit gates.
 We applied our proposed method to different types of TTNs and confirmed that it prepares quantum circuit parameters with better accuracy than embedding MPSs.
 Additionally, the computational complexity is $\mathcal{O}(\max (N\log{N}\chi^4 K^2, N\chi^3 4^K))$, or $\mathcal{O}(N\log{N}\chi^4 K^2T)$ with approximation, making it applicable to practical problems.
 As the number of qubits increases in the future, the difference in representational power between TTN and MPS will become more pronounced, thereby enhancing the importance of methods for embedding TTN into quantum circuits.
