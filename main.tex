@@ -128,8 +128,8 @@ This study is expected to extend the application of VQAs to higher-dimensional s
 % \newpage
 
 
-
 \cleardoublepage
+\pagenumbering{arabic}
 \chapter{Introduction}
 Variational Quantum Algorithms~(VQAs) are the foremost approach for achieving a quantum advantage with the current generation of quantum computing technologies.
 Quantum computers are anticipated to outperform classical ones, with some algorithms already proving more efficient~\cite{shor1994algorithms,grover1996fast}.
@@ -161,7 +161,7 @@ Additionally, the distance between any pair of leaf nodes scales in logarithmic 
 As connected correlation functions decay exponentially with path length within a tensor network generally, TTNs are better suited to capture longer-range correlations and represent higher-dimensional objects than MPSs.
 TTNs are utilized in various fields such as chemical problems~\cite{chemical1,chemical2}, condensed matter physics~\cite{condmat1,condmat2,condmat3}, and machine learning~\cite{ml1,ml2}.
 
-Rudolph et al., has successfully avoided the barren plateau problem by utilizing tensor networks\cite{rudolph2023synergistic}.
+Rudolph et al. have successfully avoided the barren plateau problem by utilizing tensor networks\cite{rudolph2023synergistic}.
 They proposed a method of first optimizing tensor networks, then mapping the optimized tensor networks to quantum circuits, and finally executing VQAs.
 While numerical results have shown that this method can indeed avoid the barren plateau, mapping tensor network states into shallow quantum circuits is a general challenge.
 The case where the tensor network structure is an MPS has already been well-studied~\cite{EncodingMPS,mpsdecomp,mpsoptim,mpspreparation}.
@@ -360,9 +360,9 @@ However, since $q(x)$ is not directly accessible, the cost function is defined u
 
 % 結果
 The advancements in the study of quantum generative models are as follows.
-Benedetti et al., introduced a variational framework for training quantum circuit Born machines, demonstrated with classical and synthetic datasets, such as the bars-and-stripes dataset and synthetic datasets related to preparing GHZ states and coherent thermal states\cite{born-machine}.
+Benedetti et al. introduced a variational framework for training quantum circuit Born machines, demonstrated with classical and synthetic datasets, such as the bars-and-stripes dataset and synthetic datasets related to preparing GHZ states and coherent thermal states\cite{born-machine}.
 Liu and Wang investigated the generative model's representational power~\cite{q-generative2}.
-Coyle et al., showed that quantum circuit Born machines can simulate the restricted Boltzmann machine (RBM) and perform a sampling task difficult for classical computers~\cite{q-generative3}.
+Coyle et al. showed that quantum circuit Born machines can simulate the restricted Boltzmann machine (RBM) and perform a sampling task difficult for classical computers~\cite{q-generative3}.
 
 % まとめ
 
@@ -1022,8 +1022,8 @@ The fundamental concept of the optimization algorithm for quantum circuits embed
    \For{$k=1$ to $K$}{
     $U_{old} \leftarrow \mathrm{L}[U]^{(k)}_i$\;
     Calculate environment tensor $E$\;
-    SVD $E=USV\dagger$\;
-    $U_{new} \leftarrow UV\dagger$\;
+    SVD $E=USV^\dagger$\;
+    $U_{new} \leftarrow UV^\dagger$\;
     $\mathrm{L}[U]^{(k)}_i \leftarrow U_{old}(U_{old}^\dagger U_{new})^r$\;
    }
   }
@@ -1040,7 +1040,7 @@ Algorithm~\ref{algorithm:optimization} details the optimization process for TTNs
 % \end{figure*}
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{fig-optimization.pdf}
+    \includegraphics[width=.95\linewidth]{fig-optimization.pdf}
     \caption{Optimization procedure of tensors. 
     Consider the tensor network formed by taking the inner product between the generated quantum circuit and the original TTN.
     The original TTN is depicted in light blue, while the generated quantum circuit is shown in light green.
@@ -1048,7 +1048,7 @@ Algorithm~\ref{algorithm:optimization} details the optimization process for TTNs
     \label{fig:optimization}
 \end{figure}
 The environment tensor $E$ is obtained by contracting all tensors except for the one of interest.
-In this algorithm, the tensor of interest is $\mathrm{L}[U]^{(k)}_i$, and $E$ becomes a rank-4 tensor with two legs on the left and two on the right.
+In this algorithm, the tensor of interest is $\mathrm{L}[U]^{(k)}_i$ and $E$ becomes a rank-4 tensor with two legs on the left and two on the right.
 This tensor represents the optimal operator for maximizing the magnitude of the inner product between the original TTN and the generated quantum circuit.
 However, since $E$ is not inherently unitary, it cannot be directly used as a quantum gate.
 To address this, we compute SVD of $E$ and utilize the fact that the product $UV^\dagger$ is the unitary matrix that minimizes the Frobenius distance to $E$.
@@ -1063,7 +1063,7 @@ When creating the $(k+1)$-th layer using the systematic decomposition algorithm,
 It should be noted that since we are using the penetration algorithm, the $\ket{\psi}$ that has absorbed $L[U]^{j\dagger}$ retains its TTN structure.
 The integrated algorithm is presented as Algorithm~\ref{algorithm:integration}.
 \begin{algorithm}[tbp]
- \caption{[$D_i$, $O_{all}$] method for TTN}
+ \caption{[$D_i$, $O_{all}$] method for TTN.}
  \label{algorithm:integration}
  \KwIn{TTN $\psi_0$, Maximum number of layers $K$}
  \KwOut{Quantum Circuit $\prod_{k=1}^K \mathrm{L}[U]^{(k)}\ket{0}$}
@@ -1073,7 +1073,7 @@ The integrated algorithm is presented as Algorithm~\ref{algorithm:integration}.
  Convert $\ket{\psi_{\chi=2}}$ to $\mathrm{L}[U]^{(k)}$\;
  Optimize $\prod_{k'=1}^{k} \mathrm{L}[U]^{(k')}$\;
  \For{$j=1$ to $k$}{
- Absorb $\mathrm{L}[U]^{j\dagger}$ into $\ket{\psi}$\;
+ Absorb $\mathrm{L}[U]^{(j)\dagger}$ into $\ket{\psi}$\;
  }
  }
 \end{algorithm}
@@ -1214,6 +1214,8 @@ Additionally, the computational complexity is $\mathcal{O}(\max (N\log{N}\chi^4 
 As the number of qubits increases in the future, the difference in representational power between TTN and MPS will become more pronounced, thereby enhancing the importance of methods for embedding TTN into quantum circuits.
 This study will be an important bridge for implementing hybrid algorithms combining tree tensor networks and quantum computing.
 
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{apalike}
 \bibliography{main}
 
