@@ -9,7 +9,9 @@
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{bm}
 \usepackage{braket}
+\usepackage{CJK}
 \usepackage{graphicx}
+% \usepackage[margin=3cm]{geometry}
 % \usepackage[margin=3cm]{geometry}
 \usepackage{multicol}
 \usepackage{mathtools}
@@ -31,22 +33,62 @@
 }
 
 
+% \renewcommand{\maketitle}{
+%     \begin{center}
+%         \vspace*{2cm}
+%         {\LARGE \textbf{A MASTER THESIS}} \\[2cm]  % 修士論文
+%         {\Huge \textbf{Embedding of Tree Tensor Networks into Quantum Circuits of Two-Qubit
+% Gates}} \\[0.5cm]  % 英語タイトル
+%         {\Large 二量子ビットゲート量子回路へのツリーテンソルネットワークの埋め込み} \\[2cm]  % 日本語タイトル
+%         {\small January 2025} \\[1cm]  % 日時
+%         {\large Supervisor: Prof. Synge Todo} \\[2cm]  % 指導教員名
+%         \rule[0.5ex]{10cm}{1pt} \\  % 上の線
+%         {\large Shota Sugawara} \\ % 名前
+%         \rule[0.5ex]{10cm}{1pt} \\[1cm]  % 下の線
+%         {\large Department of Physics, Graduate School of Science \\ The University of Tokyo}  % 所属
+%     \end{center}
+%     \thispagestyle{empty} 
+% }
+
 \renewcommand{\maketitle}{
     \begin{center}
-        \vspace*{2cm}
-        {\LARGE \textbf{A MASTER THESIS}} \\[2cm]  % 修士論文
-        {\Huge \textbf{Embedding of Tree Tensor Networks into Quantum Circuits of Two-Qubit
-Gates}} \\[0.5cm]  % 英語タイトル
-        {\Large 二量子ビットゲート量子回路へのツリーテンソルネットワークの埋め込み} \\[2cm]  % 日本語タイトル
-        {\small January 2025} \\[1cm]  % 日時
-        {\large Supervisor: Prof. Synge Todo} \\[2cm]  % 指導教員名
-        \rule[0.5ex]{10cm}{1pt} \\  % 上の線
-        {\large Shota Sugawara} \\ % 名前
-        \rule[0.5ex]{10cm}{1pt} \\[1cm]  % 下の線
-        {\large Department of Physics, Graduate School of Science \\ The University of Tokyo}  % 所属
+        % \vspace*{2cm}
+        {\Huge Master's thesis} \\[3.5cm]  % 修士論文
+        {\huge Embedding of Tree Tensor Networks into Quantum Circuits of Two-Qubit Gates}\\[8mm]
+        {\Large \begin{CJK}{UTF8}{ipxm}(二量子ビットゲート量子回路への\\ツリーテンソルネットワークの埋め込み)\end{CJK}}\\[8mm]
+        {\Large January, 2025}\\[30mm]
+        {\LARGE Supervisor: Prof. Synge Todo}\\[25mm]  % 指導教員名
+        {\Huge 35236050 \quad Shota Sugawara}\\[2mm]
+        {\textit{\large Department of Physics, Graduate School of Science, The University of Tokyo}\\}  % 所属
+        \textit{\large 7-3-1 Hongo, Bunkyo-ku, Tokyo 113-0033, Japan.}\\
     \end{center}
     \thispagestyle{empty} 
 }
+
+% \renewcommand{\maketitle}{
+% \thispagestyle{empty}
+%     \setlength{\topmargin}{-10mm} % 必要な余白を手動で調整
+%     \setlength{\oddsidemargin}{10mm} 
+%     \setlength{\evensidemargin}{10mm}
+%     \setlength{\textwidth}{150mm}
+%     \setlength{\textheight}{220mm}
+%     \begin{center}
+%         {\Huge Master's thesis}\\[40mm]
+%         {\huge Embedding of Tree Tensor Networks into Quantum Circuits of Two-Qubit Gates}\\[8mm]
+%         {\Large \begin{CJK}{UTF8}{ipxm}(二量子ビットゲート量子回路への\\ツリーテンソルネットワークの埋め込み)\end{CJK}}\\[8mm]
+%         {\Large January, 2025}\\[40mm]
+%         {\LARGE Supervisor: Prof. Synge Todo}\\[25mm]
+%         {\Huge 35236050 \quad Shota Sugawara}\\[2mm]
+%         \textit{\large Department of Physics, Graduate School of Science, The University of Tokyo}\\
+%         \textit{\large 7-3-1 Hongo, Bunkyo-ku, Tokyo 113-0033, Japan.}\\
+%     \end{center}
+%     \setlength{\topmargin}{0pt}
+%     \setlength{\oddsidemargin}{0pt}
+%     \setlength{\evensidemargin}{0pt}
+%     \setlength{\textwidth}{\paperwidth}
+%     \setlength{\textheight}{\paperheight}
+%     \thispagestyle{empty} 
+% }
 
 
 % \title{Embedding of Tree Tensor Networks into Shallow Quantum Circuits}
@@ -56,9 +98,52 @@ Gates}} \\[0.5cm]  % 英語タイトル
 % \date{2025/1/6}
 
 \begin{document}
+
+%! TEX root = ../main.tex
+% \thispagestyle{empty}
+
+% \thispagestyle{empty}
+
+
+% \begin{titlepage}
+%     {%
+%     \newgeometry{left=25mm,right=25mm,top=50mm,bottom=30mm}
+%     \begin{center}
+%         {\Huge Master's thesis}\\[40mm]
+%         {\huge Quantum Error Mitigation in Hamiltonian Simulation \\ Using Quantum Singular Value Transformation}\\[8mm]
+%         {\Large \begin{CJK}{UTF8}{ipxm}(量子特異値変換を用いたハミルトニアンシミュレーションにおける量子エラー抑制)\end{CJK}}\\[8mm]
+%         {\Large January, 2025}\\[40mm]
+%         {\LARGE Supervisor: Prof. Synge Todo}\\[25mm]
+%         {\Huge 35236019 \quad Tokinori Oe}\\[2mm]
+%         \textit{\large Department of Physics, Graduate School of Science, The University of Tokyo}\\
+%         \textit{\large 7-3-1 Hongo, Bunkyo-ku, Tokyo 113-0033, Japan.}\\
+%     \end{center}
+%     \restoregeometry
+%     }
+% \end{titlepage}
+
+% \begin{titlepage}
+%     {%
+%     % \newgeometry{left=25mm,right=25mm,top=50mm,bottom=30mm}
+%     \begin{center}
+%         {\Huge Master's thesis}\\[40mm]
+%         {\huge Quantum Error Mitigation in Hamiltonian Simulation \\ Using Quantum Singular Value Transformation}\\[8mm]
+%         {\Large \begin{CJK}{UTF8}{ipxm}(量子特異値変換を用いたハミルトニアンシミュレーションにおける量子エラー抑制)\end{CJK}}\\[8mm]
+%         {\Large January, 2025}\\[40mm]
+%         {\LARGE Supervisor: Prof. Synge Todo}\\[25mm]
+%         {\Huge 35236019 \quad Tokinori Oe}\\[2mm]
+%         \textit{\large Department of Physics, Graduate School of Science, The University of Tokyo}\\
+%         \textit{\large 7-3-1 Hongo, Bunkyo-ku, Tokyo 113-0033, Japan.}\\
+%     \end{center}
+%     % \restoregeometry
+%     }
+% \end{titlepage}
+
+
 \sloppy
 
 \maketitle
+
 
 % \clearpage
 % \thispagestyle{empty}
@@ -408,9 +493,9 @@ Several initialization strategies have been proposed, and empirical evidence sug
 %% 初期化戦略: パラメータを相関させてランダム性を制限
 %% 初期化戦略: レイヤーごとのトレーニング
 One approach to initialization strategies involves limiting the randomness within the ansatz.
-\cite{init-strategy0} proposed reducing circuit randomness by randomly selecting a subset of initial parameters and choosing the remaining parameters such that the entire circuit evaluates to the identity.
-\cite{init-strategy1} introduced an initialization method that effectively reduces the dimensionality of the hyperparameter space by correlating the ansatz parameters.
-\cite{init-strategy2} suggested an optimization technique that incrementally adds layers to the circuit, optimizing shallow circuits first rather than optimizing all parameters simultaneously.
+Grant et al. proposed reducing circuit randomness by randomly selecting a subset of initial parameters and choosing the remaining parameters such that the entire circuit evaluates to the identity~\cite{init-strategy0}.
+Volkoff and Coles introduced an initialization method that effectively reduces the dimensionality of the hyperparameter space by correlating the ansatz parameters~\cite{init-strategy1}.
+Skolik et al. suggested an optimization technique that incrementally adds layers to the circuit, optimizing shallow circuits first rather than optimizing all parameters simultaneously~\cite{init-strategy2}.
 
 %% 初期化戦略: 古典ニューラルネットワークによる事前トレーニング
 %% 初期化戦略: テンソルネットワークによる事前トレーニング
@@ -423,8 +508,8 @@ Numerical experiments have confirmed that the gradient magnitudes in VQAs remain
 
 \cleardoublepage
 \chapter{Tensor networks}
-Tensor networks are a powerful mathematical framework that efficiently represents and manipulates high-dimensional data by decomposing tensors into interconnected lower-dimensional components.
-They have been widely applied in various fields, including quantum many-body physics for approximating ground states of complex systems~\cite{dmrg-ttn}, machine learning for real data~\cite{MPSsupervised}, and combinatorial optimization problems.
+Tensor networks are powerful mathematical frameworks that efficiently represent and manipulate high-dimensional data by decomposing tensors into interconnected lower-dimensional components~\cite{tn-review,tn-review2}.
+They have been widely applied in various fields, including quantum many-body physics for approximating ground states of complex systems~\cite{dmrg,tebd,tn-review3}, machine learning for real data~\cite{MPSsupervised,MPSgenerative}, and combinatorial optimization problems.
 Recently, increasing attention has been directed towards their compatibility with quantum computing, as their structure aligns well with quantum circuits and facilitates hybrid quantum-classical algorithms~\cite{tn-qc}.
 In this chapter, we begin by explaining the fundamentals of tensor network notation to fully leverage its advantages. 
 Next, we introduce two of the most renowned tensor network forms, Matrix Product States~(MPSs) and Tree Tensor Networks~(TTNs), and discuss their useful property called canonical form. 
@@ -736,7 +821,7 @@ Although embedding general tensor networks into shallow quantum circuits is chal
 In this subsection, we overview the technique for seamlessly embedding MPSs into shallow quantum circuits.
 
 % systematic decomposition by disentangling
-\cite{EncodingMPS} introduced a systematic decomposition method for an MPS into several layers of two-qubit gates with a linear next-neighbor topology. 
+Ran introduced a systematic decomposition method for an MPS into several layers of two-qubit gates with a linear next-neighbor topology~\cite{EncodingMPS}. 
 First, the MPS $\ket{\psi^{(k)}}$ with bond dimension $\chi$ is truncated to a bond dimension two MPS $\ket{\psi_{\chi=2}^{(k)}}$.
 Next, the isometric tensors in $\ket{\psi_{\chi=2}^{(k)}}$ are converted into unitary tensors.
 The resulting set of unitary tensors, $L[U]^{(k)}$, is referred to as a layer and can be embedded into a quantum circuit composed of two-qubit gates.
@@ -748,7 +833,7 @@ and
 \begin{equation}
     \mathrm{L}[U]^{(k)\dagger}\ket{\psi_{\chi=2}^{(k)}}=\ket{0}
 \end{equation}
-are holds, $L[U]^{(k)\dagger}$ can be considered a disentangler, transforming the quantum state into a product state.
+are hold, $L[U]^{(k)\dagger}$ can be considered a disentangler, transforming the quantum state into a product state.
 Finally, a new MPS $\ket{\psi^{(k+1)}}=\mathrm{L}[U]^{(k)\dagger}\ket{\psi^{(k)}}$ can be obtained.
 Since $L[U]^{(k)\dagger}$ acts as a disentangler, $\ket{\psi^{(k+1)}}$ should have reduced entanglement compared to $\ket{\psi^{(k)}}$.
 However, this operation involves the transformation of the tensor network, which introduces approximation errors in practical calculations.
@@ -757,16 +842,15 @@ By repeating this process starting from the original MPS $\ket{\psi^{(0)}}$, a q
 % decomposition by optimization
 Optimization-based methods are employed as an alternative approach to embedding tensor networks into quantum circuits.
 This method sequentially optimizes the unitary operators within the quantum circuit to maximize the magnitude of the inner product between the quantum circuit and the tensor network.
-\cite{env-tensor} proposed an iterative optimization technique that utilizes the calculation of environment tensors and SVD.
-Similarly, \cite{mpsoptim} employed this iterative optimization method to embed quantum states into quantum circuits.
+Evenbly and Vidal proposed an iterative optimization technique that utilizes the calculation of environment tensors and SVD~\cite{env-tensor}.
+Similarly, Shirakawa et al. employed this iterative optimization method to embed quantum states into quantum circuits~\cite{mpsoptim}.
 An environment tensor is calculated to update a unitary by removing the unitary from the circuit and contracting the remaining tensor network.
-This tensor represents the optimal operator for increasing fidelity, though it is not inherently unitary.
-To ensure unitarity, an SVD is performed, and the resulting product is used to find the unitary matrix that best approximates the optimal operator.
-For a more detailed explanation of the optimization algorithm, please refer to \cite{mpsdecomp} or the chapter on optimization algorithms for TTNs described later.
+We perform the SVD of the environment tensor and utilize the fact that the resulting unitary matrix serves as the optimal operator to increase the fidelity between the original tensor network and the constructed quantum circuit.
+For a more detailed explanation of the optimization algorithm, please refer to \cite{mpsdecomp,mpsoptim} or the chapter on optimization algorithms for TTNs described later.
 
 
 % decomposition of MPS
-\cite{mpsdecomp} investigated the optimal sequence for combining these two methods to achieve the highest accuracy.
+Rudolph et al. investigated the optimal sequence for combining these two methods to achieve the highest accuracy~\cite{mpsdecomp}.
 The study concludes that the best results are obtained by adding new layers through a systematic decomposition step and optimizing all layers with each addition.
 This method has achieved exceptional accuracy in embedding a wide range of MPSs in fields such as physics, machine learning, and random systems.
 Therefore, it can be considered one of the best current techniques for embedding MPSs into shallow circuits.
@@ -1049,16 +1133,13 @@ Algorithm~\ref{algorithm:optimization} details the optimization process for TTNs
 \end{figure}
 The environment tensor $E$ is obtained by contracting all tensors except for the one of interest.
 In this algorithm, the tensor of interest is $\mathrm{L}[U]^{(k)}_i$ and $E$ becomes a rank-4 tensor with two legs on the left and two on the right.
-This tensor represents the optimal operator for maximizing the magnitude of the inner product between the original TTN and the generated quantum circuit.
-However, since $E$ is not inherently unitary, it cannot be directly used as a quantum gate.
-To address this, we compute SVD of $E$ and utilize the fact that the product $UV^\dagger$ is the unitary matrix that minimizes the Frobenius distance to $E$.
-Consequently, $UV^\dagger$ can be considered the unitary operator that maximizes the magnitude of the inner product between the original TTN and the generated quantum circuit.
+We compute the SVD of $E$ and utilize the fact that the product $UV^\dagger$ is the unitary matrix that maximizes the magnitude of the inner product between the original TTN and the generated quantum circuit~\cite{mpsoptim}.
 Given the strength of this local update, we introduce a learning rate $r$, which modifies the unitary update rule via $U_{old}(U_{old}^\dagger U_{new})^r$. 
 Replacing $\mathrm{L}[U]^{(k)}_i$ with the unitary operator calculated in this manner for all operators constitutes one step, and repeating this process for $T$ steps completes the optimization algorithm.
 
 The integration of the systematic decomposition and optimization algorithms involves a method where a new layer is added using the systematic decomposition algorithm, followed by optimizing the entire quantum circuit with the optimization algorithm.
 This process is repeated iteratively.
-\cite{mpsdecomp} refers to this method as Iter[$D_i$, $O_{all}$], confirming that it achieves the highest accuracy regardless of the type of MPSs.
+Rudolph et al. refers to this method as Iter[$D_i$, $O_{all}$]~\cite{mpsdecomp}, confirming that it achieves the highest accuracy regardless of the type of MPSs.
 When creating the $(k+1)$-th layer using the systematic decomposition algorithm, the layers up to $k$ are first absorbed into the original TTN using the penetration algorithm before executing the systematic decomposition algorithm.
 It should be noted that since we are using the penetration algorithm, the $\ket{\psi}$ that has absorbed $L[U]^{j\dagger}$ retains its TTN structure.
 The integrated algorithm is presented as Algorithm~\ref{algorithm:integration}.
